@@ -1,0 +1,7 @@
+.users {
+  display: flex;
+  justify-content: space-between;
+}
+.photo {
+  width: 100px;
+}

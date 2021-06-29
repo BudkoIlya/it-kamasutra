@@ -1,0 +1,97 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:jest/recommended",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint", "jest", "prettier"],
+  "rules": {
+    "arrow-body-style": ["warn", "as-needed", { "requireReturnForObjectLiteral": false }],
+    "react/no-did-update-set-state": "off",
+    "no-unused-expressions": ["error", { "allowShortCircuit": true }],
+    "react/state-in-constructor": ["error", "never"],
+    "prettier/prettier": "error",
+    "prefer-template": "warn",
+    "react/prop-types": "off",
+    // на статический(нет анимации нажатия) элемент(div, span и т.д.)
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    // нужно вешать дополнительный лисенер например onKeyDown, onKeyUp, onKeyPress (отключенно)
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/destructuring-assignment": "off", // разрешает деструктаризацию
+    "no-shadow": "off",
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "no-use-before-define": "off",
+    "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
+    "quotes": ["error", "single", { "avoidEscape": true, "allowTemplateLiterals": false }],
+    "max-len": [1, 140, 2, { "ignoreComments": true }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }],
+    "jsx-a11y/no-autofocus": "warn",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "args": "after-used",
+        "ignoreRestSiblings": false
+      }
+    ],
+    "@typescript-eslint/ban-types": [
+      "warn",
+      {
+        "types": {
+          "{}": {
+            "message": "Use object instead",
+            "fixWith": "object"
+          }
+        }
+      }
+    ],
+    "@typescript-eslint/no-inferrable-types": [
+      2,
+      {
+        "ignoreParameters": true,
+        "ignoreProperties": true
+      }
+    ],
+    // disable the rule for all files - отключение что функция всегда должна что-то возвращать
+    "@typescript-eslint/explicit-module-boundary-types": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
+}

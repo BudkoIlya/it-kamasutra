@@ -1,0 +1,11 @@
+.fieldRememberMe {
+  display: flex;
+  margin: 10px 0;
+}
+.fieldRememberMe > span {
+  margin-left: 5px;
+}
+.errorLogin {
+  color: red;
+  margin-bottom: 10px;
+}
