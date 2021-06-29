@@ -29,7 +29,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettier": "prettier --write \"{,!(node_modules)/**/}*.{ts,js,css,tsx,jsx}\"",
+    "prettier": "prettier --write \"{,!(node_modules)/**/}*.{ts,js,css,tsx,html,jsx}\"",
     "eslint-fix": "eslint --fix . --ext .js,.ts,.tsx,.jsx src"
   },
   "eslintConfig": {

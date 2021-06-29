@@ -21,7 +21,7 @@ export const User: React.FC<PropsType> = ({ user }) => {
     <div key={user.id} className={classes.users}>
       <div>
         <div>
-          {/* todo: Очень важное замечание - здесь в путь прокидывается id которое потом достаем с помощью params */}
+          {/* todo: Очень важное замечание - здесь в путь прокидывается id которое потом достается с помощью params в ProfileContainer */}
           <NavLink to={`/profile/${user.id}`}>
             <img
               src={user.photos.small != null ? user.photos.small : userPhoto}

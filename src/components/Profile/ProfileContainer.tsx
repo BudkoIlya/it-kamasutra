@@ -20,6 +20,7 @@ class ProfileContainer extends React.Component<PropsType> {
   }
 
   componentDidUpdate(prevProps: PropsType) {
+    // userId прокидывается в params с помощью <NavLink to={`/profile/${user.id}`}> в User
     const { userId } = this.props.match.params;
     const prevUserId = prevProps.match.params.userId;
     if (prevUserId !== userId) {
