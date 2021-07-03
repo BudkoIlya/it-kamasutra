@@ -13,3 +13,4 @@ export const getIsFriends = ({ usersPage }: AppStateType) => usersPage.isFriends
 // auth
 export const selectCaptchaUrl = ({ auth }: AppStateType) => auth.captchaUrl;
 export const selectIsAuth = ({ auth }: AppStateType) => auth.isAuth;
+export const selectLogin = ({ auth }: AppStateType) => auth.login;

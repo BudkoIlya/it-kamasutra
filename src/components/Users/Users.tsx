@@ -4,7 +4,7 @@ import { NumberParam, StringParam, useQueryParams } from 'use-query-params';
 import { Paginator } from '../common/Paginator/Paginator';
 import { User } from './User';
 import { FilterGetUsersT, getUsersThunkCreator } from '../../redux/users-reducer';
-import { getTotalUsersCount, getUsers } from '../../redux/users-selectors';
+import { getTotalUsersCount, getUsers } from '../../redux/selectors';
 import { Forms } from './UsersSearchForm';
 
 type Props = {

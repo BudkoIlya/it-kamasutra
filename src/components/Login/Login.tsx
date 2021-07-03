@@ -6,7 +6,7 @@ import { CreateField, GetStringKeys, Input } from '../common/FormsControls/Forms
 import { required } from '../../utils/validators/validators';
 import { login, getCaptchaUrl } from '../../redux/auth-reducer';
 import styles from './Login.module.css';
-import { selectCaptchaUrl, selectIsAuth } from '../../redux/users-selectors';
+import { selectCaptchaUrl, selectIsAuth } from '../../redux/selectors';
 
 // Login: React.FC<mapStatePropsType> - компонента принимает аргументы mapStatePropsType
 export const Login: React.FC = () => {

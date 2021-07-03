@@ -85,7 +85,11 @@
       }
     ],
     // disable the rule for all files - отключение что функция всегда должна что-то возвращать
-    "@typescript-eslint/explicit-module-boundary-types": "off"
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "import/no-extraneous-dependencies": [
+      0,
+      { "devDependencies": false, "optionalDependencies": false, "peerDependencies": false }
+    ]
   },
   "settings": {
     "import/resolver": {

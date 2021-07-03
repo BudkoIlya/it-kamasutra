@@ -5,7 +5,7 @@ import classes from './Users.module.css';
 import userPhoto from '../../assets/img/user.png';
 import { UserType } from '../../types/types';
 import { followThunkCreator, unFollowThunkCreator } from '../../redux/users-reducer';
-import { getFollowingInProgress } from '../../redux/users-selectors';
+import { getFollowingInProgress } from '../../redux/selectors';
 
 // types
 type PropsType = {
