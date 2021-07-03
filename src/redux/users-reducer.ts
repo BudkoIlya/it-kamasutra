@@ -56,15 +56,10 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialUsersS
             )
       };
     }
-    case 'USERS/SET_TERM': {
+    case 'USERS/SET_TERM_AND_FRIENDS': {
       return {
         ...state,
-        term: action.term
-      };
-    }
-    case 'USERS/SET_IS_FRIENDS': {
-      return {
-        ...state,
+        term: action.term,
         isFriends: action.isFriends
       };
     }
@@ -96,15 +91,11 @@ export const actions = {
       isFetching,
       userId
     } as const),
-  setTerm: (term: string = '') =>
+  setTermAndFriends: (isFriends: FilterGetUsersT['isFriends'] = 'all', term: string = '') =>
     ({
-      type: 'USERS/SET_TERM',
+      type: 'USERS/SET_TERM_AND_FRIENDS',
+      isFriends,
       term
-    } as const),
-  setIsFriends: (isFriends: FilterGetUsersT['isFriends'] = 'all') =>
-    ({
-      type: 'USERS/SET_IS_FRIENDS',
-      isFriends
     } as const)
 };
 
@@ -117,15 +108,15 @@ export const getUsersThunkCreator =
     dispatch(actions.setCurrentPageCreator(currentPage));
     // если идёт загрузка то работает прелоадер, здесь мы помечяем что идёт загрузка!
     dispatch(actions.toggleIsFetchingCreator(true));
-    // Получаем всех узеров getUsers лежит в api
+    // Получаем всех юзеров getUsers лежит в api
     const data = await usersAPI.getUsers(currentPage, pageSize, filter);
-    // здесь мы помечяем что загрузка окончена!
+    // здесь мы помечяем что загрузка окончена
     dispatch(actions.toggleIsFetchingCreator(false));
     dispatch(actions.setUsersCreator(data.items));
     // получааем количество страниц
     dispatch(actions.setUsersTotalCountCreator(data.totalCount));
-    dispatch(actions.setTerm(filter.term));
-    dispatch(actions.setIsFriends(filter.isFriends));
+    // dispatch(actions.setTerm(filter.term));
+    dispatch(actions.setTermAndFriends(filter.isFriends, filter.term));
   };
 
 // Dispatch<ActionsType> - еще один способ типизации диспатча
@@ -147,14 +138,12 @@ const followUnfollow = async (
 export const followThunkCreator =
   (userId: number): ThunkType =>
   async dispatch => {
-    // Запрос на подписку
     await followUnfollow(dispatch, userId, usersAPI.follow.bind(usersAPI), actions.followCreator);
   };
 
 export const unFollowThunkCreator =
   (userId: number): ThunkType =>
   async dispatch => {
-    // Запрос на отписку
     await followUnfollow(dispatch, userId, usersAPI.unFollow.bind(usersAPI), actions.unFollowCreator);
   };
 

@@ -3,6 +3,7 @@ import './App.css';
 import { connect, Provider } from 'react-redux';
 import { compose } from 'redux';
 import { BrowserRouter, Route, withRouter, Switch, Redirect } from 'react-router-dom';
+import { QueryParamProvider } from 'use-query-params';
 import HeaderContainer from './components/Header/HeaderContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
 import { Login } from './components/Login/Login';
@@ -68,9 +69,11 @@ const AppContainer = compose<FC | ComponentType>(withRouter, connect(mapStateToP
 const SamuraiApp: React.FC = () => (
   // <BrowserRouter> - используется с Route
   <BrowserRouter>
-    <Provider store={store}>
-      <AppContainer />
-    </Provider>
+    <QueryParamProvider ReactRouterRoute={Route}>
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    </QueryParamProvider>
   </BrowserRouter>
 );
 

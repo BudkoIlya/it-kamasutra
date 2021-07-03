@@ -1,10 +1,11 @@
-import React from 'react';
-import { Field, Form, Formik, FormikProps, FormikValues } from 'formik';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { NumberParam, StringParam, useQueryParams } from 'use-query-params';
 import { Paginator } from '../common/Paginator/Paginator';
 import { User } from './User';
 import { FilterGetUsersT, getUsersThunkCreator } from '../../redux/users-reducer';
 import { getTotalUsersCount, getUsers } from '../../redux/users-selectors';
+import { Forms } from './UsersSearchForm';
 
 type Props = {
   pageSize: number;
@@ -13,7 +14,7 @@ type Props = {
   filterGetUsers: FilterGetUsersT;
 };
 
-export const Users: React.FC<Props> = ({ currentPage, pageSize, isFetching, filterGetUsers: { term, isFriends } }) => {
+export const Users: React.FC<Props> = ({ currentPage, pageSize, isFetching, filterGetUsers: { isFriends, term } }) => {
   // store
   const totalUsersCount = useSelector(getTotalUsersCount);
   const users = useSelector(getUsers);
@@ -22,43 +23,34 @@ export const Users: React.FC<Props> = ({ currentPage, pageSize, isFetching, filt
   const onFilterChanged = (currentPage: number, filter: FilterGetUsersT) => {
     dispatch(getUsersThunkCreator(currentPage, pageSize, filter));
   };
+  const [query, setQuery] = useQueryParams({
+    page: NumberParam,
+    isFriends: StringParam,
+    term: StringParam
+  });
+  useEffect(() => {
+    const queryTerm = query.term ? query.term : '';
+    const queryIsFriends = query.isFriends ? (query.isFriends as FilterGetUsersT['isFriends']) : 'all';
+    dispatch(getUsersThunkCreator(query.page as number, pageSize, { term: queryTerm, isFriends: queryIsFriends }));
+  }, []);
 
-  const searchUsersByFilter = ({ searchUsers, friendSelector }: FormikValues) => {
-    // при поиске c term всегда должна сбрасываться страница на первую
-    onFilterChanged(1, { term: searchUsers, isFriends: friendSelector });
-  };
-  const resetSearchData = (actions: FormikProps<FiledValues>) => {
-    onFilterChanged(1, { term: '', isFriends: 'all' });
-    // todo: handleReset - сбрасываем на initialValues, тоесть searchUsers = '' и friendSelector = 'all'
-    // actions.handleReset();
-    // todo: resetForm - либо прописываем вручную нужные значения
-    actions.resetForm({
-      values: {
-        searchUsers: '',
-        friendSelector: 'all'
-      }
+  useEffect(() => {
+    setQuery({
+      page: currentPage,
+      isFriends,
+      term
     });
-  };
+  }, [term, currentPage, isFriends]);
+
   return (
     <div>
-      <Formik initialValues={{ searchUsers: term, friendSelector: isFriends }} onSubmit={searchUsersByFilter}>
-        {actions => (
-          <Form>
-            <Field type='text' name='searchUsers' placeholder='Search' />
-            <Field component='select' name='friendSelector'>
-              <option value='all'>All</option>
-              <option value='true'>Only followed</option>
-              <option value='false'>Only unfollowed</option>
-            </Field>
-            <button type='submit' disabled={isFetching}>
-              Search
-            </button>
-            <button type='button' name='reset' onClick={() => resetSearchData(actions)} disabled={isFetching}>
-              Reset
-            </button>
-          </Form>
-        )}
-      </Formik>
+      <Forms
+        setQuery={setQuery}
+        term={term}
+        isFriends={isFriends}
+        isFetching={isFetching}
+        onFilterChanged={onFilterChanged}
+      />
       <Paginator
         filter={{ term, isFriends }}
         isFetching={isFetching}
@@ -73,10 +65,4 @@ export const Users: React.FC<Props> = ({ currentPage, pageSize, isFetching, filt
       ))}
     </div>
   );
-};
-
-// Types
-type FiledValues = {
-  searchUsers: FilterGetUsersT['term'];
-  friendSelector: FilterGetUsersT['isFriends'];
 };
