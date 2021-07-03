@@ -25,7 +25,6 @@ export const AppHeader: React.FC = () => {
             </Menu.Item>
           </Menu>
         </Col>
-
         <Col span={4} className={classes.loginBlock}>
           {isAuth ? (
             <div className={classes.login}>

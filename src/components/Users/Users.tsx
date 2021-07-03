@@ -55,10 +55,9 @@ export const Users: React.FC<Props> = ({ currentPage, pageSize, isFetching, filt
         filter={{ term, isFriends }}
         isFetching={isFetching}
         currentPage={currentPage}
-        onFilterChanged={onFilterChanged}
+        onChange={onFilterChanged}
         totalItemsCount={totalUsersCount}
         pageSize={pageSize}
-        portionSize={10}
       />
       {users.map(user => (
         <User key={user.id} user={user} />
