@@ -21,6 +21,7 @@ const ProfileContainer = lazy(() => import('./components/Profile/ProfileContaine
 const UsersPage = lazy(() =>
   import('./components/Users/UsersPage').then(({ UserPageAuthRedirect }) => ({ default: UserPageAuthRedirect }))
 );
+const ChatPage = lazy(() => import('./pages/Chat/ChatPage').then(({ ChatPage }) => ({ default: ChatPage })));
 
 // App - компонента, возвращающая jsx. В validators.ts обозначается как тег <App />
 class App extends Component<PropsType & DispatchPropsType> {
@@ -58,6 +59,9 @@ class App extends Component<PropsType & DispatchPropsType> {
                   <Menu.Item key='3'>
                     <Link to='/users'>Users</Link>
                   </Menu.Item>
+                  <Menu.Item key='4'>
+                    <Link to='/chat'>Chat</Link>
+                  </Menu.Item>
                 </SubMenu>
               </Menu>
             </Sider>
@@ -74,6 +78,7 @@ class App extends Component<PropsType & DispatchPropsType> {
                   <Route path='/dialogs' render={() => <DialogsContainer />} />
                   <Route path='/users' render={() => <UsersPage />} />
                   <Route path='/login' render={() => <Login />} />
+                  <Route path='/chat' render={() => <ChatPage />} />
                   <Route path='*' render={() => <div>404 NOT FOUND</div>} />
                 </Switch>
               </Suspense>

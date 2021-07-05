@@ -6,6 +6,7 @@ import { User } from './User';
 import { FilterGetUsersT, getUsersThunkCreator } from '../../redux/users-reducer';
 import { getTotalUsersCount, getUsers } from '../../redux/selectors';
 import { Forms } from './UsersSearchForm';
+import classes from './Users.module.css';
 
 type Props = {
   pageSize: number;

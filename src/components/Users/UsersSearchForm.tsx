@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field, Form, Formik, FormikProps, FormikValues } from 'formik';
 import { SetQuery } from 'use-query-params';
+import { Button } from 'antd';
 import { FilterGetUsersT } from '../../redux/users-reducer';
 
 export const Forms: React.FC<Props> = ({ term, isFriends, isFetching, setQuery, onFilterChanged }) => {
@@ -40,12 +41,12 @@ export const Forms: React.FC<Props> = ({ term, isFriends, isFetching, setQuery, 
             <option value='true'>Only followed</option>
             <option value='false'>Only unfollowed</option>
           </Field>
-          <button type='submit' disabled={isFetching}>
+          <Button htmlType='submit' disabled={isFetching}>
             Search
-          </button>
-          <button type='button' name='reset' onClick={() => resetSearchData(actions)} disabled={isFetching}>
+          </Button>
+          <Button name='reset' onClick={() => resetSearchData(actions)} disabled={isFetching}>
             Reset
-          </button>
+          </Button>
         </Form>
       )}
     </Formik>
