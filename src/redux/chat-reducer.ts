@@ -4,13 +4,16 @@ import { ChatMessageType } from '../pages/Chat/ChatPage';
 import { BaseThunkType, InferActionsTypes } from './redux-store';
 
 const initialState = {
-  messages: [] as ChatMessageType[]
+  messages: [] as ChatMessageType[],
 };
 
-const chatReducer = (state = initialState, action: ActionsType): InitialAuthStateType => {
+const chatReducer = (
+  state = initialState,
+  action: ActionsType
+): InitialAuthStateType => {
   switch (action.type) {
-    case 'auth/SET_USER_DATA': {
-      return {};
+    case 'auth/SET_CAPTCHA_URL_SUCCESS': {
+      return state;
     }
     default:
       return state;
@@ -21,13 +24,13 @@ const actions = {
   getCaptchaUrlSuccess: (captchaUrl: string) =>
     ({
       type: 'auth/SET_CAPTCHA_URL_SUCCESS',
-      payload: captchaUrl
-    } as const)
+      payload: captchaUrl,
+    } as const),
 };
 
 // thunks
 
-export const getCaptchaUrl = (): ThunkType => async dispatch => {
+export const getCaptchaUrl = (): ThunkType => async (dispatch) => {
   const { data } = await securityAPI.getCaptcha();
   dispatch(actions.getCaptchaUrlSuccess(data.url));
 };

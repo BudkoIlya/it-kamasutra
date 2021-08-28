@@ -6,6 +6,8 @@ type GetCaptchaUrlResponseType = {
 
 export const securityAPI = {
   getCaptcha() {
-    return instance.get<GetCaptchaUrlResponseType>('security/get-captcha-url').then(data => data);
-  }
+    return instance
+      .get<GetCaptchaUrlResponseType>('security/get-captcha-url')
+      .then((data) => data);
+  },
 };

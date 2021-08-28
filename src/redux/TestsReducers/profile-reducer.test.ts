@@ -5,16 +5,16 @@ const state = {
   posts: [
     { id: 1, message: 'Hi', likeCounts: 21 },
     { id: 2, message: 'How a u', likeCounts: 22 },
-    { id: 3, message: 'Yo', likeCounts: 23 }
+    { id: 3, message: 'Yo', likeCounts: 23 },
   ],
   profile: null,
-  status: ''
+  status: '',
 };
 
 const newPost = {
   id: 100,
   message: 'new post',
-  likeCounts: 10
+  likeCounts: 10,
 };
 
 it('length of posts should be increase', () => {

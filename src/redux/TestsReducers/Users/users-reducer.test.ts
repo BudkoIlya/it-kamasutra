@@ -11,9 +11,9 @@ beforeEach(() => {
         followed: false,
         photos: {
           small: null,
-          large: null
+          large: null,
         },
-        status: 'status 0'
+        status: 'status 0',
       },
       {
         id: 1,
@@ -21,9 +21,9 @@ beforeEach(() => {
         followed: false,
         photos: {
           small: null,
-          large: null
+          large: null,
         },
-        status: 'status 1'
+        status: 'status 1',
       },
       {
         id: 2,
@@ -31,9 +31,9 @@ beforeEach(() => {
         followed: true,
         photos: {
           small: null,
-          large: null
+          large: null,
         },
-        status: 'status 2'
+        status: 'status 2',
       },
       {
         id: 3,
@@ -41,16 +41,18 @@ beforeEach(() => {
         followed: true,
         photos: {
           small: null,
-          large: null
+          large: null,
         },
-        status: 'status 3'
-      }
+        status: 'status 3',
+      },
     ],
     pageSize: 5,
-    totalUsersCount: 0, // колличество пользователей
+    totalUsersCount: 0, // количество пользователей
     currentPage: 1,
     isFetching: true, // загрузка идёт если тру
-    followingInProgress: [] // массив айдишек пользователь
+    followingInProgress: [], // массив айдишек пользователь
+    term: '',
+    isFriends: 'all',
   };
 });
 

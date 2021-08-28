@@ -1,6 +1,9 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 
-const ProfileStatusWithHooks: React.FC<PropsType> = ({ status, updateStatus }) => {
+const ProfileStatusWithHooks: React.FC<PropsType> = ({
+  status,
+  updateStatus,
+}) => {
   const [editMode, setEditMode] = useState(false);
   const [newStatus, setStatus] = useState(status);
 
@@ -15,7 +18,7 @@ const ProfileStatusWithHooks: React.FC<PropsType> = ({ status, updateStatus }) =
     setEditMode(false);
     updateStatus(newStatus);
   };
-  const setValueSatus = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  const setValueStatus = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setStatus(target.value);
   };
   return (
@@ -23,11 +26,18 @@ const ProfileStatusWithHooks: React.FC<PropsType> = ({ status, updateStatus }) =
       {!editMode ? (
         <div>
           <b>Status:</b>
-          <span onDoubleClick={activateEditMode}>{status || 'добавить статус'}</span>
+          <span onDoubleClick={activateEditMode}>
+            {status || 'добавить статус'}
+          </span>
         </div>
       ) : (
         <div>
-          <input autoFocus onBlur={deactivateEditMode} value={newStatus} onChange={setValueSatus} />
+          <input
+            autoFocus
+            onBlur={deactivateEditMode}
+            value={newStatus}
+            onChange={setValueStatus}
+          />
         </div>
       )}
     </>

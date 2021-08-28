@@ -1,0 +1,48 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+  "extends": [
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jest/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "project": "./tsconfig.eslint.json",
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "jest", "react"],
+  "rules": {
+    "import/prefer-default-export": "off", // Отключаем сообщение, предупреждающее о необходимости экспорта по умолчанию.
+    "linebreak-style": "off",
+    "no-param-reassign": ["error", { "props": false }],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "react/jsx-props-no-spreading": "off", // отключает {...props}
+    "react/prop-types": "off", // отключает PropTypes
+    "@typescript-eslint/explicit-module-boundary-types": "off", // отключает типы для возвращаемого значения функции
+    "import/no-extraneous-dependencies": "off", 
+    "import/no-cycle": "off",
+    "no-use-before-define": "off", // можно использовать переменные до объявления
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/ban-types": ["warn"],
+    "react/state-in-constructor": "off", // можно использовать класс без конструктора
+    "react/destructuring-assignment": ["error", "always", { "ignoreClassFields": true }],
+    "no-unused-expressions": "off",
+    "@typescript-eslint/no-unused-expressions": "off",
+    "jsx-a11y/no-autofocus": "warn"
+  }
+}

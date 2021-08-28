@@ -8,7 +8,7 @@ import {
   savePhotoThunk,
   setStatusThunk,
   updateStatusThunk,
-  saveProfileThunk
+  saveProfileThunk,
 } from '../../redux/profile-reducer';
 import { withAuthRedirect } from '../hoc/withAuthRedirect';
 import { AppStateType } from '../../redux/redux-store';
@@ -21,7 +21,11 @@ class ProfileContainer extends React.Component<PropsType> {
 
   componentDidUpdate(prevProps: PropsType) {
     // userId прокидывается в params с помощью <NavLink to={`/profile/${user.id}`}> в User
-    const { userId } = this.props.match.params;
+    const {
+      match: {
+        params: { userId },
+      },
+    } = this.props;
     const prevUserId = prevProps.match.params.userId;
     if (prevUserId !== userId) {
       // debugger; - проверка мой ли выбран профиль либо чей-то другой, при загрузке компонеты должен отображаться мой профиль
@@ -30,64 +34,70 @@ class ProfileContainer extends React.Component<PropsType> {
   }
 
   refreshProfile = () => {
-    const { match, getUsersProfileThunk, setStatusThunk, authorizedUserId } = this.props;
+    const { match, getUsersProfile, setStatus, authorizedUserId } = this.props;
     let { userId } = match.params; // userId произвольное название выставляется в App.ts в <Route path = ''/> приходит ввиде СТРОКИ
     if (!userId) userId = String(authorizedUserId); // если нет в url значения id поумолчанию отображаем 2(в дальнейшем изменим на сой профиль )
     // Авторизируемся и получаем данные этого пользователя в state
     // todo: сервак требует числа, в парамсах приходит строка <Route path='/profile/:userId?'/>
-    getUsersProfileThunk(Number(userId));
-    setStatusThunk(Number(userId));
+    getUsersProfile(Number(userId));
+    setStatus(Number(userId));
   };
 
   render() {
-    const { profile, status, updateStatusThunk, savePhotoThunk } = this.props;
+    const { profile, status, updateStatus, savePhoto, match, saveProfile } =
+      this.props;
     return (
       <Profile
-        savePhoto={savePhotoThunk}
-        isOwner={!this.props.match.params.userId} // userId - если есть, то значит я не владелец страницы
+        savePhoto={savePhoto}
+        isOwner={!match.params.userId} // userId - если есть, то значит я не владелец страницы
         profile={profile}
         status={status}
-        updateStatus={updateStatusThunk}
-        saveProfile={this.props.saveProfileThunk}
+        updateStatus={updateStatus}
+        saveProfile={saveProfile}
       />
     );
   }
 }
-const mapStateToProps = ({ profilePage, auth }: AppStateType): mapStateToPropsT => ({
+const mapStateToProps = ({
+  profilePage,
+  auth,
+}: AppStateType): MapStateToPropsT => ({
   profile: profilePage.profile,
   status: profilePage.status,
   authorizedUserId: auth.userId,
-  isAuth: auth.isAuth
+  isAuth: auth.isAuth,
 });
 export default compose<FC | ComponentType>(
   withAuthRedirect, // hoc для ридеректа
   connect(mapStateToProps, {
-    getUsersProfileThunk,
-    setStatusThunk,
-    updateStatusThunk,
-    savePhotoThunk,
-    saveProfileThunk
+    getUsersProfile: getUsersProfileThunk,
+    setStatus: setStatusThunk,
+    updateStatus: updateStatusThunk,
+    savePhoto: savePhotoThunk,
+    saveProfile: saveProfileThunk,
   }),
   withRouter
 )(ProfileContainer);
 
 // types
-type mapStateToPropsT = {
+type MapStateToPropsT = {
   profile: ProfileType | null;
   status: string;
   authorizedUserId: number | null;
   isAuth: boolean;
 };
 
-type mapDispatchToPropsT = {
-  getUsersProfileThunk: (userId: number) => void;
-  setStatusThunk: (userId: number) => void;
-  updateStatusThunk: (status: string) => void;
-  savePhotoThunk: (photo: File) => void;
-  saveProfileThunk: (newProfileData: ProfileType) => Promise<void>;
+type MapDispatchToPropsT = {
+  getUsersProfile: (userId: number) => void;
+  setStatus: (userId: number) => void;
+  updateStatus: (status: string) => void;
+  savePhoto: (photo: File) => void;
+  saveProfile: (newProfileData: ProfileType) => Promise<void>;
 };
 type MatchParams = {
   userId: string;
 };
 
-type PropsType = mapStateToPropsT & mapDispatchToPropsT & RouteComponentProps<MatchParams>;
+type PropsType = MapStateToPropsT &
+  MapDispatchToPropsT &
+  RouteComponentProps<MatchParams>;

@@ -13,11 +13,12 @@ type StateType = {
 class ProfileStatus extends Component<PropsType, StateType> {
   state = {
     editMode: false,
-    valueStatus: this.props.status
+    valueStatus: this.props.status,
   };
 
   componentDidUpdate(prevProps: PropsType) {
     const { status } = this.props;
+    // eslint-disable-next-line react/no-did-update-set-state
     prevProps.status !== status && this.setState({ valueStatus: status });
   }
 
@@ -35,12 +36,14 @@ class ProfileStatus extends Component<PropsType, StateType> {
   };
 
   render() {
+    const { status } = this.props;
+    const { valueStatus, editMode } = this.state;
     return (
       <>
-        {!this.state.editMode ? (
+        {!editMode ? (
           <div>
             <span onDoubleClick={this.activateEditMode}>
-              {this.props.status ? this.props.status : 'добавить статус'}
+              {status || 'добавить статус'}
             </span>
           </div>
         ) : (
@@ -48,7 +51,7 @@ class ProfileStatus extends Component<PropsType, StateType> {
             <input
               autoFocus
               onBlur={this.deactivateEditMode}
-              value={this.state.valueStatus}
+              value={valueStatus}
               onChange={this.setValueStatus}
             />
           </div>

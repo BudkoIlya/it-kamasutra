@@ -15,7 +15,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsT & MapStateToPropsT> = ({
   isFetching,
   isOwner,
   savePhoto,
-  saveProfile
+  saveProfile,
 }) => {
   const handlePhotoSelected = ({ target }: ChangeEvent<HTMLInputElement>) =>
     target.files?.length && savePhoto(target.files[0]);
@@ -27,7 +27,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsT & MapStateToPropsT> = ({
       .then(() => {
         setEditMode(false);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   };
@@ -38,13 +38,26 @@ const ProfileInfo: React.FC<ProfileInfoPropsT & MapStateToPropsT> = ({
         <Preloader isFetching={isFetching} />
       ) : (
         <div className={classes.descriptionBlock}>
-          <img alt='profileImg' src={profile.photos.large || userPhoto} className={classes.mainPhoto} />
-          {isOwner && <input type='file' onChange={handlePhotoSelected} />}
+          <img
+            alt="profileImg"
+            src={profile.photos.large || userPhoto}
+            className={classes.mainPhoto}
+          />
+          {isOwner && <input type="file" onChange={handlePhotoSelected} />}
           {/* initialValues - устанавливает значения в поля автоматически если совпадают имена свойст и полей */}
           {editMode ? (
-            <ProfileDataForm initialValues={profile} profile={profile} onSubmit={onSubmit} isOwner={isOwner} />
+            <ProfileDataForm
+              initialValues={profile}
+              profile={profile}
+              onSubmit={onSubmit}
+              isOwner={isOwner}
+            />
           ) : (
-            <ProfileData profile={profile} isOwner={isOwner} handleToggleMode={() => setEditMode(true)} />
+            <ProfileData
+              profile={profile}
+              isOwner={isOwner}
+              handleToggleMode={() => setEditMode(true)}
+            />
           )}
           <ProfileStatusWithHooks status={status} updateStatus={updateStatus} />
         </div>
@@ -53,11 +66,15 @@ const ProfileInfo: React.FC<ProfileInfoPropsT & MapStateToPropsT> = ({
   );
 };
 
-const ProfileData: React.FC<ProfileDataTypes> = ({ profile, isOwner, handleToggleMode }) => (
+const ProfileData: React.FC<ProfileDataTypes> = ({
+  profile,
+  isOwner,
+  handleToggleMode,
+}) => (
   <div className={classes.descriptionBlock}>
     {isOwner && (
       <div>
-        <button type='button' onClick={handleToggleMode}>
+        <button type="button" onClick={handleToggleMode}>
           Edit
         </button>
       </div>
@@ -79,7 +96,11 @@ const ProfileData: React.FC<ProfileDataTypes> = ({ profile, isOwner, handleToggl
     <div>
       <b>Contacts</b>:
       {Object.entries(profile.contacts).map((contact, idx) => (
-        <Contacts key={String(idx)} contactTitle={contact[0]} value={contact[1]} />
+        <Contacts
+          key={String(idx)}
+          contactTitle={contact[0]}
+          value={contact[1]}
+        />
       ))}
     </div>
   </div>
@@ -90,7 +111,9 @@ const Contacts: React.FC<ContactsType> = ({ contactTitle, value }) => (
     {contactTitle}: {value}
   </div>
 );
-const MapStateToProps = (store: AppStateType) => ({ isFetching: store.usersPage.isFetching });
+const MapStateToProps = (store: AppStateType) => ({
+  isFetching: store.usersPage.isFetching,
+});
 
 export default connect(MapStateToProps)(ProfileInfo);
 

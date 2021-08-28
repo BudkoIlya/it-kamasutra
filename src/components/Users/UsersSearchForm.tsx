@@ -4,8 +4,17 @@ import { SetQuery } from 'use-query-params';
 import { Button } from 'antd';
 import { FilterGetUsersT } from '../../redux/users-reducer';
 
-export const Forms: React.FC<Props> = ({ term, isFriends, isFetching, setQuery, onFilterChanged }) => {
-  const searchUsersByFilter = ({ searchUsers, friendSelector }: FormikValues) => {
+export const Forms: React.FC<Props> = ({
+  term,
+  isFriends,
+  isFetching,
+  setQuery,
+  onFilterChanged,
+}) => {
+  const searchUsersByFilter = ({
+    searchUsers,
+    friendSelector,
+  }: FormikValues) => {
     // при поиске c term всегда должна сбрасываться страница на первую
     onFilterChanged(1, { term: searchUsers, isFriends: friendSelector });
   };
@@ -17,13 +26,13 @@ export const Forms: React.FC<Props> = ({ term, isFriends, isFetching, setQuery, 
     actions.resetForm({
       values: {
         searchUsers: '',
-        friendSelector: 'all'
-      }
+        friendSelector: 'all',
+      },
     });
     setQuery({
       page: 1,
       isFriends: 'all',
-      term: ''
+      term: '',
     });
   };
 
@@ -33,18 +42,22 @@ export const Forms: React.FC<Props> = ({ term, isFriends, isFetching, setQuery, 
       initialValues={{ searchUsers: term, friendSelector: isFriends }}
       onSubmit={searchUsersByFilter}
     >
-      {actions => (
+      {(actions) => (
         <Form>
-          <Field type='text' name='searchUsers' placeholder='Search' />
-          <Field component='select' name='friendSelector'>
-            <option value='all'>All</option>
-            <option value='true'>Only followed</option>
-            <option value='false'>Only unfollowed</option>
+          <Field type="text" name="searchUsers" placeholder="Search" />
+          <Field component="select" name="friendSelector">
+            <option value="all">All</option>
+            <option value="true">Only followed</option>
+            <option value="false">Only unfollowed</option>
           </Field>
-          <Button htmlType='submit' disabled={isFetching}>
+          <Button htmlType="submit" disabled={isFetching}>
             Search
           </Button>
-          <Button name='reset' onClick={() => resetSearchData(actions)} disabled={isFetching}>
+          <Button
+            name="reset"
+            onClick={() => resetSearchData(actions)}
+            disabled={isFetching}
+          >
             Reset
           </Button>
         </Form>

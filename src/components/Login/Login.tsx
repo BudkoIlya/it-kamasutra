@@ -2,7 +2,11 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { InjectedFormProps, reduxForm } from 'redux-form';
-import { CreateField, GetStringKeys, Input } from '../common/FormsControls/FormsControls';
+import {
+  CreateField,
+  GetStringKeys,
+  Input,
+} from '../common/FormsControls/FormsControls';
 import { required } from '../../utils/validators/validators';
 import { login, getCaptchaUrl } from '../../redux/auth-reducer';
 import styles from './Login.module.css';
@@ -13,17 +17,22 @@ export const Login: React.FC = () => {
   const isAuth = useSelector(selectIsAuth);
   const dispatch = useDispatch();
   const onSubmit = (formData: LoginFormValuesType) => {
-    // TODO: не пойму как тут пропиcать типы для Promise.reject(message)
+    // TODO: не пойму как тут обозначить типы для Promise.reject(message)
     dispatch(
-      login(formData.email, formData.password, formData.rememberMe, formData.captcha) as unknown as Promise<any>
-    ).catch(error => {
+      login(
+        formData.email,
+        formData.password,
+        formData.rememberMe,
+        formData.captcha
+      ) as unknown as Promise<any>
+    ).catch((error) => {
       // при ошибке входа спрашивает капчу
       dispatch(getCaptchaUrl());
       console.error(error);
     });
   };
   if (isAuth) {
-    return <Redirect to='/profile' />;
+    return <Redirect to="/profile" />;
   }
   return (
     <div>
@@ -35,16 +44,22 @@ export const Login: React.FC = () => {
 };
 const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType>> = ({
   handleSubmit,
-  error
+  error,
   // captchaUrl
 }) => {
   const captchaUrl = useSelector(selectCaptchaUrl);
   return (
     <form onSubmit={handleSubmit}>
       {CreateField<LoginFormValuesTypeKeys>('Name', 'email', [required], Input)}
-      {CreateField<LoginFormValuesTypeKeys>('Password', 'password', [required], Input, {
-        type: 'password'
-      })}
+      {CreateField<LoginFormValuesTypeKeys>(
+        'Password',
+        'password',
+        [required],
+        Input,
+        {
+          type: 'password',
+        }
+      )}
       {CreateField<LoginFormValuesTypeKeys>(
         undefined,
         'rememberMe',
@@ -56,18 +71,25 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType>> = ({
       )}
       {captchaUrl && (
         <div>
-          <img src={captchaUrl} alt='captcha' />
-          {CreateField<LoginFormValuesTypeKeys>('Enter captcha', 'captcha', [required], Input)}
+          <img src={captchaUrl} alt="captcha" />
+          {CreateField<LoginFormValuesTypeKeys>(
+            'Enter captcha',
+            'captcha',
+            [required],
+            Input
+          )}
         </div>
       )}
       {error && <div className={styles.errorLogin}>{error}</div>}
       <div>
-        <button type='submit'>Login</button>
+        <button type="submit">Login</button>
       </div>
     </form>
   );
 };
-const ReduxLoginForm = reduxForm<LoginFormValuesType>({ form: 'login' })(LoginForm);
+const ReduxLoginForm = reduxForm<LoginFormValuesType>({ form: 'login' })(
+  LoginForm
+);
 
 // Types
 type LoginFormValuesType = {

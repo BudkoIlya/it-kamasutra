@@ -10,7 +10,13 @@ type PropsType = {
   onChange: (...args: any[]) => void;
 };
 
-export const Paginator: React.FC<PropsType> = ({ totalItemsCount, pageSize, isFetching, filter, onChange }) => {
+export const Paginator: React.FC<PropsType> = ({
+  totalItemsCount,
+  pageSize,
+  isFetching,
+  filter,
+  onChange,
+}) => {
   return (
     <div>
       <Pagination
@@ -19,7 +25,7 @@ export const Paginator: React.FC<PropsType> = ({ totalItemsCount, pageSize, isFe
         total={totalItemsCount}
         showSizeChanger={false}
         pageSize={pageSize}
-        onChange={page => onChange(page, filter)}
+        onChange={(page) => onChange(page, filter)}
       />
     </div>
   );

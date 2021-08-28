@@ -9,22 +9,25 @@ const initialState = {
   email: null as string | null,
   login: null as string | null,
   isAuth: false,
-  captchaUrl: null as string | null
+  captchaUrl: null as string | null,
 };
 
-const authReducer = (state = initialState, action: ActionsType): InitialAuthStateType => {
+const authReducer = (
+  state = initialState,
+  action: ActionsType
+): InitialAuthStateType => {
   switch (action.type) {
     case 'auth/SET_USER_DATA': {
       return {
         ...state,
         // в action.data лежат userId, email, login, поэтому он их перезапишет
-        ...action.payload
+        ...action.payload,
       };
     }
     case 'auth/SET_CAPTCHA_URL_SUCCESS': {
       return {
         ...state,
-        captchaUrl: action.payload
+        captchaUrl: action.payload,
       };
     }
     default:
@@ -33,23 +36,28 @@ const authReducer = (state = initialState, action: ActionsType): InitialAuthStat
 };
 
 const actions = {
-  setAuthUserData: (userId: number | null, email: string | null, login: string | null, isAuth: boolean) =>
+  setAuthUserData: (
+    userId: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean
+  ) =>
     ({
       type: 'auth/SET_USER_DATA',
-      payload: { userId, email, login, isAuth }
+      payload: { userId, email, login, isAuth },
     } as const),
   getCaptchaUrlSuccess: (captchaUrl: string) =>
     ({
       type: 'auth/SET_CAPTCHA_URL_SUCCESS',
-      payload: captchaUrl
-    } as const)
+      payload: captchaUrl,
+    } as const),
 };
 
 // thunks
-export const getAuthUserDataThunk = (): ThunkType => async dispatch => {
+export const getAuthUserDataThunk = (): ThunkType => async (dispatch) => {
   const {
     resultCode,
-    data: { id, email, login }
+    data: { id, email, login },
   } = await authAPI.me();
   if (resultCode === ResultCodesEnum.Success) {
     dispatch(actions.setAuthUserData(id, email, login, true));
@@ -57,9 +65,18 @@ export const getAuthUserDataThunk = (): ThunkType => async dispatch => {
   // асинхронная функции возвращает промис
 };
 
+export const getCaptchaUrl = (): ThunkType => async (dispatch) => {
+  const { data } = await securityAPI.getCaptcha();
+  dispatch(actions.getCaptchaUrlSuccess(data.url));
+};
 export const login =
-  (email: string, pass: string, rememberMe: boolean, captcha: string): ThunkType =>
-  async dispatch => {
+  (
+    email: string,
+    pass: string,
+    rememberMe: boolean,
+    captcha: string
+  ): ThunkType =>
+  async (dispatch) => {
     const { data } = await authAPI.login(email, pass, rememberMe, captcha);
     if (data.resultCode === ResultCodesEnum.Success) {
       dispatch(getAuthUserDataThunk());
@@ -73,15 +90,11 @@ export const login =
     dispatch(stopSubmit('login', { _error: message }));
     return Promise.reject(message);
   };
-export const logout = (): ThunkType => async dispatch => {
+export const logout = (): ThunkType => async (dispatch) => {
   const { data } = await authAPI.logout();
   if (data.resultCode === ResultCodesEnum.Success) {
     dispatch(actions.setAuthUserData(null, null, null, false));
   }
-};
-export const getCaptchaUrl = (): ThunkType => async dispatch => {
-  const { data } = await securityAPI.getCaptcha();
-  dispatch(actions.getCaptchaUrlSuccess(data.url));
 };
 
 // types

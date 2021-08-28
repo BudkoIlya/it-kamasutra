@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import classes from './Users.module.css';
 import userPhoto from '../../assets/img/user.png';
 import { UserType } from '../../types/types';
-import { followThunkCreator, unFollowThunkCreator } from '../../redux/users-reducer';
+import {
+  followThunkCreator,
+  unFollowThunkCreator,
+} from '../../redux/users-reducer';
 import { getFollowingInProgress } from '../../redux/selectors';
 
 // types
@@ -26,17 +29,17 @@ export const User: React.FC<PropsType> = ({ user }) => {
             <img
               src={user.photos.small != null ? user.photos.small : userPhoto}
               className={classes.photo}
-              alt='preloader'
+              alt="preloader"
             />
           </NavLink>
         </div>
         {user.followed ? (
           // Если подписан
           <button
-            type='button'
+            type="button"
             // some возвращает true либо false
             disabled={followingInProgress.some(
-              id => id === user.id // вернёт true только в том случае если isFetching = true,
+              (id) => id === user.id // вернёт true только в том случае если isFetching = true,
               // isFetching передаётся при клике на подписку/отписку
             )}
             onClick={() => {
@@ -48,8 +51,8 @@ export const User: React.FC<PropsType> = ({ user }) => {
         ) : (
           // Если не подписан
           <button
-            type='button'
-            disabled={followingInProgress.some(id => id === user.id)}
+            type="button"
+            disabled={followingInProgress.some((id) => id === user.id)}
             onClick={() => {
               follow(user.id);
             }}

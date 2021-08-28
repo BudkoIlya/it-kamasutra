@@ -10,8 +10,12 @@ import { InitialStateType } from '../../redux/dialogs-reducer';
 const maxLength = requiredMaxLength(30);
 
 const Dialogs: React.FC<OwmPropsType> = ({ dialogsPage, sendMessages }) => {
-  const dialogsElements = dialogsPage.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id} />);
-  const messagesElements = dialogsPage.messages.map(m => <Message message={m.message} key={m.id} />);
+  const dialogsElements = dialogsPage.dialogs.map((d) => (
+    <DialogItem name={d.name} key={d.id} id={d.id} />
+  ));
+  const messagesElements = dialogsPage.messages.map((m) => (
+    <Message message={m.message} key={m.id} />
+  ));
 
   const onSendMessageClick = (value: NewMessageFormType) => {
     sendMessages(value.newMessageBody);
@@ -30,18 +34,27 @@ const Dialogs: React.FC<OwmPropsType> = ({ dialogsPage, sendMessages }) => {
   );
 };
 
-const AddMessageForm: React.FC<InjectedFormProps<NewMessageFormType>> = ({ handleSubmit }) => (
+const AddMessageForm: React.FC<InjectedFormProps<NewMessageFormType>> = ({
+  handleSubmit,
+}) => (
   <form onSubmit={handleSubmit}>
     <div>
-      {CreateField<keyof NewMessageFormType>('Введите сообщение', 'newMessageBody', [required, maxLength], Textarea)}
+      {CreateField<keyof NewMessageFormType>(
+        'Введите сообщение',
+        'newMessageBody',
+        [required, maxLength],
+        Textarea
+      )}
     </div>
     <div>
-      <button type='submit'>Отправить</button>
+      <button type="submit">Отправить</button>
     </div>
   </form>
 );
 
-const AddMessageFormRedux = reduxForm<NewMessageFormType>({ form: 'dialogAddMessageForm' })(AddMessageForm);
+const AddMessageFormRedux = reduxForm<NewMessageFormType>({
+  form: 'dialogAddMessageForm',
+})(AddMessageForm);
 
 export default Dialogs;
 

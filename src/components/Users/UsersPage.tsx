@@ -2,7 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Users } from './Users';
 import Preloader from '../common/preloader/preloader';
-import { getCurrentPage, getIsFetching, getIsFriends, getPageSize, getTerm } from '../../redux/selectors';
+import {
+  getCurrentPage,
+  getIsFetching,
+  getIsFriends,
+  getPageSize,
+  getTerm,
+} from '../../redux/selectors';
 import { withAuthRedirect } from '../hoc/withAuthRedirect';
 
 const UsersPage = () => {

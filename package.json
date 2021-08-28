@@ -3,14 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/classnames": "^2.3.1",
-    "@types/jest": "^26.0.23",
-    "@types/node": "^15.12.2",
-    "@types/react": "^17.0.9",
-    "@types/react-dom": "^17.0.6",
-    "@types/react-redux": "^7.1.16",
-    "@types/react-router-dom": "^5.1.7",
-    "@types/redux-form": "^8.2.2",
     "antd": "^4.16.6",
     "axios": "^0.21.1",
     "classnames": "^2.3.1",
@@ -33,7 +25,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write \"{,!(node_modules)/**/}*.{ts,js,css,tsx,html,jsx}\"",
-    "eslint-fix": "eslint --fix . --ext .js,.ts,.tsx,.jsx src"
+    "eslint-fix": "eslint --fix . --ext .js,.ts,.tsx,.jsx src",
+    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,11 +44,18 @@
     ]
   },
   "devDependencies": {
+    "@types/classnames": "^2.3.1",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.12.2",
+    "@types/react": "^17.0.9",
+    "@types/react-dom": "^17.0.6",
+    "@types/react-redux": "^7.1.16",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/redux-form": "^8.2.2",
     "@typescript-eslint/eslint-plugin": "^4.26.1",
     "@typescript-eslint/parser": "^4.26.1",
-    "eslint": "^7.28.0",
     "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "2.23.4",
     "eslint-plugin-jest": "^24.3.6",

@@ -15,7 +15,11 @@ type FormAdditionalTypes = {
 };
 export type GetStringKeys<T> = Extract<keyof T, string>;
 
-const FormControl: React.FC<FormControlPropsTypes> = ({ element, touched, error }) => {
+const FormControl: React.FC<FormControlPropsTypes> = ({
+  element,
+  touched,
+  error,
+}) => {
   const hasError = touched && error;
   return (
     <div className={hasError ? styles.error : ''}>
@@ -25,11 +29,25 @@ const FormControl: React.FC<FormControlPropsTypes> = ({ element, touched, error 
   );
 };
 
-export const Textarea: React.FC<WrappedFieldProps & FormAdditionalTypes> = ({ input, meta, placeholder, type }) => {
-  const element = React.createElement('textarea', { ...input, placeholder, type });
+export const Textarea: React.FC<WrappedFieldProps & FormAdditionalTypes> = ({
+  input,
+  meta,
+  placeholder,
+  type,
+}) => {
+  const element = React.createElement('textarea', {
+    ...input,
+    placeholder,
+    type,
+  });
   return <FormControl {...meta} element={element} />;
 };
-export const Input: React.FC<WrappedFieldProps & FormAdditionalTypes> = ({ input, meta, placeholder, type }) => {
+export const Input: React.FC<WrappedFieldProps & FormAdditionalTypes> = ({
+  input,
+  meta,
+  placeholder,
+  type,
+}) => {
   const element = React.createElement('input', { ...input, placeholder, type });
   return <FormControl {...meta} element={element} />;
 };
@@ -47,7 +65,13 @@ export function CreateField<FormKeysType extends string>(
 ) {
   return (
     <div className={className}>
-      <Field name={name} placeholder={placeholder} component={component} validate={validators} {...props} />
+      <Field
+        name={name}
+        placeholder={placeholder}
+        component={component}
+        validate={validators}
+        {...props}
+      />
       {additionalText && <span>{additionalText}</span>}
     </div>
   );

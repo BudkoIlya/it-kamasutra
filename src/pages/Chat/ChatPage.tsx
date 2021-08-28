@@ -28,7 +28,9 @@ const Chat: React.FC = () => {
     function createChannel() {
       ws?.removeEventListener('close', closeHandler);
       ws?.close();
-      ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx');
+      ws = new WebSocket(
+        'wss://social-network.samuraijs.com/handlers/ChatHandler.ashx'
+      );
       ws.addEventListener('close', closeHandler);
       setWsChannel(ws);
     }
@@ -50,7 +52,7 @@ const Messages: React.FC<{ wsChannel: WebSocket | null }> = ({ wsChannel }) => {
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
   useEffect(() => {
     const messageHandler = (e: MessageEvent) => {
-      setMessages(prevMessages => [...prevMessages, ...JSON.parse(e.data)]);
+      setMessages((prevMessages) => [...prevMessages, ...JSON.parse(e.data)]);
     };
     wsChannel?.addEventListener('message', messageHandler);
     return () => {
@@ -70,17 +72,26 @@ const Message: React.FC<{ message: ChatMessageType }> = ({ message }) => (
   <div>
     <img
       src={message.photo}
-      style={{ width: '50px', border: '1px solid grey', padding: '5px', marginRight: '5px' }}
-      alt='img'
+      style={{
+        width: '50px',
+        border: '1px solid grey',
+        padding: '5px',
+        marginRight: '5px',
+      }}
+      alt="img"
     />
     <b>{message.userName}</b>
     <div>{message.message}</div>
     <hr />
   </div>
 );
-const AddMessageForm: React.FC<{ wsChannel: WebSocket | null }> = ({ wsChannel }) => {
+const AddMessageForm: React.FC<{ wsChannel: WebSocket | null }> = ({
+  wsChannel,
+}) => {
   const [message, setMessage] = useState('');
-  const [readyStatus, setReadyStatus] = useState<'pending' | 'ready'>('pending');
+  const [readyStatus, setReadyStatus] = useState<'pending' | 'ready'>(
+    'pending'
+  );
   useEffect(() => {
     const openHandler = () => {
       setReadyStatus('ready');
@@ -97,17 +108,29 @@ const AddMessageForm: React.FC<{ wsChannel: WebSocket | null }> = ({ wsChannel }
   };
   return (
     <div>
-      <Formik enableReinitialize onSubmit={sendMessage} initialValues={{ chat: message }}>
+      <Formik
+        enableReinitialize
+        onSubmit={sendMessage}
+        initialValues={{ chat: message }}
+      >
         {() => (
-          <Form style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
+          <Form
+            style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}
+          >
             <Field
               style={{ resize: 'none' }}
-              as='textarea'
-              name='chat'
-              placeholder='Send message'
-              onChange={(e: React.FormEvent<HTMLInputElement>) => setMessage(e.currentTarget.value)}
+              as="textarea"
+              name="chat"
+              placeholder="Send message"
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                setMessage(e.currentTarget.value)
+              }
             />
-            <Button disabled={!wsChannel && readyStatus === 'ready'} style={{ marginLeft: '10px' }} htmlType='submit'>
+            <Button
+              disabled={!wsChannel && readyStatus === 'ready'}
+              style={{ marginLeft: '10px' }}
+              htmlType="submit"
+            >
               Send
             </Button>
           </Form>
