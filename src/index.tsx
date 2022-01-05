@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
-import SamuraiApp from './App';
+import App from './App';
 import 'antd/dist/antd.css';
 
-ReactDOM.render(<SamuraiApp />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 
 serviceWorker.unregister();

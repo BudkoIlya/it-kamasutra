@@ -3,7 +3,7 @@ import './App.css';
 import { connect, Provider } from 'react-redux';
 import { compose } from 'redux';
 import {
-  BrowserRouter,
+  HashRouter,
   Link,
   Redirect,
   Route,
@@ -106,14 +106,23 @@ class App extends Component<PropsType & DispatchPropsType> {
                   <Redirect exact from="/" to="/profile" />
                   <Route
                     // указывает userId(можно назвать как хочешь) что бы в params вытащить id
+                    exact
                     path="/profile/:userId?"
                     render={() => <ProfileContainer />}
                   />
-                  <Route path="/dialogs" render={() => <DialogsContainer />} />
-                  <Route path="/users" render={() => <UsersPage />} />
-                  <Route path="/login" render={() => <Login />} />
-                  <Route path="/chat" render={() => <ChatPage />} />
-                  <Route path="*" render={() => <div>404 NOT FOUND</div>} />
+                  <Route
+                    exact
+                    path="/dialogs"
+                    render={() => <DialogsContainer />}
+                  />
+                  <Route exact path="/users" render={() => <UsersPage />} />
+                  <Route exact path="/login" render={() => <Login />} />
+                  <Route exact path="/chat" render={() => <ChatPage />} />
+                  <Route
+                    exact
+                    path="*"
+                    render={() => <div>404 NOT FOUND</div>}
+                  />
                 </Switch>
               </Suspense>
             </Content>
@@ -138,18 +147,18 @@ const AppContainer = compose<FC | ComponentType>(
 )(App);
 
 // еще контейнер для подключение стора, перенесено в этот файл чтобы сработал тест App.text.js
-const SamuraiApp: React.FC = () => (
+const ContainerApp: React.FC = () => (
   // <BrowserRouter> - используется с Route
-  <BrowserRouter>
+  <HashRouter>
     <QueryParamProvider ReactRouterRoute={Route}>
       <Provider store={store}>
         <AppContainer />
       </Provider>
     </QueryParamProvider>
-  </BrowserRouter>
+  </HashRouter>
 );
 
-export default SamuraiApp;
+export default ContainerApp;
 
 // types
 type PropsType = ReturnType<typeof mapStateToProps>;

@@ -1,7 +1,8 @@
 {
-  "name": "it-kamasutra",
+  "name": "social-network",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://budkoilya.github.io/social-network/",
   "dependencies": {
     "antd": "^4.16.6",
     "axios": "^0.21.1",
@@ -26,7 +27,9 @@
     "eject": "react-scripts eject",
     "prettier": "prettier --write \"{,!(node_modules)/**/}*.{ts,js,css,tsx,html,jsx}\"",
     "eslint-fix": "eslint --fix . --ext .js,.ts,.tsx,.jsx src",
-    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
+    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -63,6 +66,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "7.24.0",
     "eslint-plugin-react-hooks": "4.2.0",
+    "gh-pages": "^3.2.3",
     "prettier": "^2.3.1",
     "react-test-renderer": "17.0.2",
     "typescript": "^4.3.2"
