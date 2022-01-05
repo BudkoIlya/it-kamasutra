@@ -9,6 +9,7 @@ const DialogItem: React.FC<MessagesType> = ({ id, name }) => {
     <div>
       {/* to(для) - для такого-то пути применяем  - activeClassName  */}
       <NavLink
+        exact
         className={classes.dialog}
         to={path}
         activeClassName={classes.active}
